@@ -22,3 +22,10 @@ Furthermore, this application is intended for anyone interested in gaining a bet
 
 Finally, this project has been of interest to me ever since I was introduced to the board game a few months, as despite the game's popularity very few sources delve into complexities of the graph theory under the game's hood so I thought it would make for a very interesting project.
 
+<h4>User Stories</h4>
+
+* As a user I want to be able to add a route to my hand.
+* As a user I want to be able to view my hand.
+* As a user I want to be able to a route to my hand and specify the start city, end city, length, and number of points.
+* As a user I want to be able to see the optimal path(s) to take in order to maximize the number of points obtained.
+
