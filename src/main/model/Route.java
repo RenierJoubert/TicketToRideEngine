@@ -5,8 +5,6 @@ package model;
 // in the overlying graph so order is unimpportant. The Route class also represents a length 
 // (the distance) between the start and end city measured in number of trains.
 
-import java.util.Objects;
-
 public class Route {
     
     private final String startCity;
@@ -15,7 +13,7 @@ public class Route {
 
     // REQUIRES: startCity != null, endCity != null, and length > 0
     // EFFECTS: Instantiates a route with a start city, end city, and length
-    public Route (String startCity, String endCity, int length) {
+    public Route(String startCity, String endCity, int length) {
         this.startCity = startCity;
         this.endCity = endCity;
         this.length = length;
