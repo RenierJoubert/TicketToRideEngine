@@ -49,9 +49,8 @@ public class Ticket {
     // EFFECTS: returns +points if ticket status is completed, returns -points if ticket is not completed
     public int updateScore() {
         if (status) {
-        return points;
+            return points;
         }
-        else;
-        return -points;
+        return -points; 
     }
 }
