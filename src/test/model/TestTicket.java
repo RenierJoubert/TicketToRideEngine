@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 public class TestTicket {
 
     private Ticket t1;
-    private Ticket t2;
 
     @BeforeEach
     void runBefore() {
@@ -16,8 +15,8 @@ public class TestTicket {
 
     @Test
     public void testTicketConstructor() {
-        assertEquals("Vancouver", t1.getStartCity());
-        assertEquals("Portland", t1.getEndCity());
+        assertEquals("Vancouver", t1.getStart());
+        assertEquals("Portland", t1.getEnd());
         assertEquals(3, t1.getPoints());
         assertFalse(t1.getStatus());
     }

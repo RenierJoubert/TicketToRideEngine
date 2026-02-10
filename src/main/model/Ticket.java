@@ -7,32 +7,35 @@ package model;
 
 public class Ticket {
 
-    private String startCity;
-    private String endCity;
+    private String start;
+    private String end;
     private int points;
     private boolean status;
 
 
     // REQUIRES: startCity != null, endCity != null, and points > 0
     // EFFECTS: Instantiates a ticket that has not been completed yet with a start city, end city, and points.
-    public Ticket(String startCity, String endCity, int points, boolean status) {
-
+    public Ticket(String start, String end, int points, boolean status) {
+        this.start = start;
+        this.end = end;
+        this.points = points;
+        this.status = false;
     }
 
-    public String getStartCity() {
-        return "";
+    public String getStart() {
+        return start;
     }
 
-    public String getEndCity() {
-        return "";
+    public String getEnd() {
+        return end;
     }
 
     public int getPoints() {
-        return 0;
+        return points;
     }
 
     public boolean getStatus() {
-        return false;
+        return status;
     }
 
     public void completeTicket() {
@@ -45,6 +48,10 @@ public class Ticket {
 
     // EFFECTS: returns +points if ticket status is completed, returns -points if ticket is not completed
     public int updateScore() {
-        return 0;
+        if (status) {
+        return points;
+        }
+        else;
+        return -points;
     }
 }
