@@ -15,7 +15,22 @@ public class Route {
 
     // REQUIRES: startCity != null, endCity != null, and length > 0
     // EFFECTS: Instantiates a route with a start city, end city, and length
-    public Route (String startCity, String endCity, int length) {      
+    public Route (String startCity, String endCity, int length) {
+        this.startCity = startCity;
+        this.endCity = endCity;
+        this.length = length;
+    }
+
+    public String getStartCity() {
+        return startCity;
+    }
+
+    public String getEndCity() {
+        return endCity;
+    }
+
+    public int getLength() {
+        return length;
     }
 
 }
