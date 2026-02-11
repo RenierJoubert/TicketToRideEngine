@@ -18,14 +18,14 @@ public class Hand {
     // REQUIRES: ticket != null
     // MODIFIES: this
     // EFFECTS: adds ticket to hand
-    public void addTicket() {
+    public void addTicket(Ticket ticket) {
 
     }
 
     // REQUIRES: ticket != null
     // MODIEFIES: this
     // EFFECTS: removes ticket from hand
-    public void removeTicket() {
+    public void removeTicket(Ticket ticket) {
 
     }
 
