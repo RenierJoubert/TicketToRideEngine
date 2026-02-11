@@ -5,6 +5,7 @@ package model;
 // based on the completion status of each ticket.
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class Hand {
 
@@ -12,36 +13,40 @@ public class Hand {
 
     // EFFECTS: constructs an empty hand with no tickets
     public Hand() {
-
+        tickets = new ArrayList<>();
     }
 
     // REQUIRES: ticket != null
     // MODIFIES: this
     // EFFECTS: adds ticket to hand
     public void addTicket(Ticket ticket) {
-
+        tickets.add(ticket);
     }
 
     // REQUIRES: ticket != null
     // MODIEFIES: this
     // EFFECTS: removes ticket from hand
     public void removeTicket(Ticket ticket) {
-
+        tickets.remove(ticket);
     }
 
     // EFFECTS: returns number of tickets in hand
     public int size() {
-        return 0;
+        return tickets.size();
     }
 
     // EFFECTS: returns the total score of the hand
     public int getScore() {
-        return 0;
+        int score = 0;
+        for (Ticket t : tickets) {
+            score += t.updateScore();
+        }
+        return score;
     }
 
     // EFFECTS: returns true is hand contains no tickets
     public boolean isEmpty() {
-        return false;
+        return tickets.isEmpty();
     }
 
 }
