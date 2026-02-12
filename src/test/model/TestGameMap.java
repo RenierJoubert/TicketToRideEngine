@@ -34,17 +34,17 @@ public class TestGameMap {
         boolean foundCalgary = false;
 
         for (Route r : routes) {
-            if (r.getStartCity().equals("Vancouver") &&
-            r.getEndCity().equals("Seattle") &&
-            r.getLength() == 1) {
-            foundSeattle = true;
+            if (r.getStartCity().equals("Vancouver") 
+                    && r.getEndCity().equals("Seattle") 
+                    && r.getLength() == 1) {
+                foundSeattle = true;
             }
 
-            if (r.getStartCity().equals("Vancouver") &&
-               r.getEndCity().equals("Calgary") &&
-               r.getLength() == 3) {
-               foundCalgary = true;
-               }
+            if (r.getStartCity().equals("Vancouver") 
+                    && r.getEndCity().equals("Calgary") 
+                    && r.getLength() == 3) {
+                foundCalgary = true;
+            }
             
         }
 
