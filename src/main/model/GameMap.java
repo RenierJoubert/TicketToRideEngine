@@ -12,11 +12,13 @@ public class GameMap {
     
     // EFFECTS: constructs the complete board
     public GameMap() {
-        return;
+        adjacencyMap = new HashMap<>();
+        initializeRoutes();
     }
 
     // MODIFIES: this
     // EFFECTS: adds all routes 
+    @SuppressWarnings("methodlength") 
     private void initializeRoutes() {
         addRoute(new Route("Vancouver", "Seattle", 1));
         addRoute(new Route("Vancouver", "Calgary", 3));
@@ -179,12 +181,32 @@ public class GameMap {
     // MODIFIES: this
     // EFFECTS: adds the route to the adjacency map for both cities
     private void addRoute(Route route) {
-        return;
+        String start = route.getStartCity();
+        String end = route.getEndCity();
+
+        if (!adjacencyMap.containsKey(start)) {
+        
+            adjacencyMap.put(start, new ArrayList<>());
+        }
+
+        if (!adjacencyMap.containsKey(end)) {
+        
+            adjacencyMap.put(end, new ArrayList<>());
+        }
+
+        adjacencyMap.get(start).add(route);
+        adjacencyMap.get(end).add(route);
+
     }
 
     // REQUIRES: route != null
     // EFFECTS: returns a list of routes incident to the input city
     public List<Route> getRoutesFrom(String city) {
-        return Collections.emptyList();
+        
+        if (!adjacencyMap.containsKey(city)) {
+            return Collections.emptyList();
+        }
+
+        return Collections.unmodifiableList(adjacencyMap.get(city));
     }
 }
