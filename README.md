@@ -19,7 +19,7 @@ Furthermore, this application is intended for anyone interested in gaining a bet
 
 <h4>Why does this project interest me?</h4>
 
-Finally, this project has been of interest to me ever since I was introduced to the board game a few months, as despite the game's popularity very few sources delve into complexities of the graph theory under the game's hood so I thought it would make for a very interesting project.
+Finally, this project has been of interest to me ever since I was introduced to the board game a few months ago, as despite the game's popularity very few sources delve into complexities of the graph theory under the game's hood so I thought it would make for a very interesting project.
 
 <h4>User Stories</h4>
 
