@@ -14,6 +14,7 @@ public class TestFindPath {
 
     @BeforeEach
     void runBefore() {
+        
         map = new GameMap();
         finder = new FindPath(map);
         hand = new Hand();
@@ -21,12 +22,14 @@ public class TestFindPath {
 
     @Test
     void testEmptyHand() {
+        
         Set<Route> result = finder.findRoutes(hand);
         assertTrue(result.isEmpty());
     }
 
     @Test
     void testNaiveTicket() {
+        
         Ticket t = new Ticket("Vancouver", "Seattle", 2, false);
         hand.addTicket(t);
         Set<Route> result = finder.findRoutes(hand);
@@ -48,6 +51,7 @@ public class TestFindPath {
 
     @Test
     void testOneTicket() {
+        
         Ticket t = new Ticket("Vancouver", "Portland", 4, false);
         hand.addTicket(t);
         Set<Route> result = finder.findRoutes(hand);
@@ -78,6 +82,7 @@ public class TestFindPath {
 
     @Test
     void testReuseRoutes() {
+        
         Ticket t1 = new Ticket("Vancouver", "Seattle", 2, false);
         Ticket t2 = new Ticket("Seattle", "Portland", 2, false);
 
@@ -93,6 +98,7 @@ public class TestFindPath {
 
     @Test
     void testTrainConstraint() {
+        
         Ticket t1 = new Ticket("Vancouver", "Miami", 21, false);
         Ticket t2 = new Ticket("Los Angeles", "Montreal", 20, false);
         Ticket t3 = new Ticket("Winnipeg", "El Paso", 12, false);
@@ -111,4 +117,44 @@ public class TestFindPath {
         assertTrue(totalLength <= 45);
     }
 
+    @Test
+    void testUnreachableTicket() {
+        
+        Ticket t = new Ticket("Vancouver", "Paris", 5, false);
+        hand.addTicket(t);
+
+        Set<Route> result = finder.findRoutes(hand);
+
+        assertTrue(result.isEmpty());
+
+    }
+
+    @Test
+    void testAllTicketsUnreachable() {
+        
+        Ticket t1 = new Ticket("Paris", "Pretoria", 5, false);
+        Ticket t2 = new Ticket("Hong Kong", "London", 5, false);
+
+        hand.addTicket(t1);
+        hand.addTicket(t2);
+
+        Set<Route> result = finder.findRoutes(hand);
+
+        assertTrue(result.isEmpty());
+    }
+    
+    @Test
+    void testZeroAdditionalCostDensity() {
+        
+        Ticket t1 = new Ticket("Vancouver", "Seattle", 2, false);
+        Ticket t2 = new Ticket("Vancouver", "Seattle", 2, false);
+
+        hand.addTicket(t1);
+        hand.addTicket(t2);
+
+        Set<Route> result = finder.findRoutes(hand);
+
+        assertEquals(1, result.size());
+    
+    }
 }
