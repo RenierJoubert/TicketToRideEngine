@@ -1,6 +1,9 @@
 package model;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -94,4 +97,22 @@ public class TestHand {
         assertEquals(-2, hand.getScore());
     }
 
+     @Test
+    void testGetTicketsEmptyHand() {
+        List<Ticket> tickets = hand.getTickets();
+        assertTrue(tickets.isEmpty());
+    }
+
+    @Test
+    void testGetTicketsAfterAdd() {
+        
+        hand.addTicket(t1);
+        hand.addTicket(t2);
+
+        List<Ticket> tickets = hand.getTickets();
+
+        assertEquals(2, tickets.size());
+        assertTrue(tickets.contains(t1));
+        assertTrue(tickets.contains(t2));
+    }
 }
