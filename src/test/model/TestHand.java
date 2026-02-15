@@ -97,7 +97,7 @@ public class TestHand {
         assertEquals(-2, hand.getScore());
     }
 
-     @Test
+    @Test
     void testGetTicketsEmptyHand() {
         List<Ticket> tickets = hand.getTickets();
         assertTrue(tickets.isEmpty());

@@ -6,6 +6,7 @@ package model;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Hand {
 
@@ -47,6 +48,11 @@ public class Hand {
     // EFFECTS: returns true is hand contains no tickets
     public boolean isEmpty() {
         return tickets.isEmpty();
+    }
+
+    // EFFECTS: returns the tickets in the players hand
+    public List<Ticket> getTickets() {
+        return tickets;
     }
 
 }
