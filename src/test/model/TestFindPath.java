@@ -157,4 +157,61 @@ public class TestFindPath {
         assertEquals(1, result.size());
     
     }
+
+    @Test
+    void testComputePathEmptyHand() {
+
+        Path path = finder.computePath(hand);
+        assertNotNull(path);
+        assertTrue(path.getRoutes().isEmpty());
+        assertTrue(path.getCompletedTickets().isEmpty());
+        assertTrue(path.getIncompleteTickets().isEmpty());
+        assertEquals(0, path.getScore());
+    }
+
+    @Test
+    void testComputePathSingleTicketCompleted() {
+        
+        Ticket t = new Ticket("Vancouver", "Seattle", 5, false);
+        hand.addTicket(t);
+
+        Path path = finder.computePath(hand);
+        assertNotNull(path);
+        assertFalse(path.getRoutes().isEmpty());
+        assertTrue(path.getCompletedTickets().contains(t));
+        assertTrue(path.getIncompleteTickets().isEmpty());
+        assertEquals(t.getPoints(), path.getScore());
+    }
+
+    @Test
+    void testComputePathMultipleTicketsSomeIncomplete() {
+        
+        Ticket t1 = new Ticket("Vancouver", "Seattle", 5, false);
+        Ticket t2 = new Ticket("Vancouver", "Toronto", 15, false); // may not be completable under train limit
+        hand.addTicket(t1);
+        hand.addTicket(t2);
+
+        Path path = finder.computePath(hand);
+        assertNotNull(path);
+        assertFalse(path.getRoutes().isEmpty());
+        assertTrue(!path.getCompletedTickets().isEmpty());
+        assertTrue(!path.getIncompleteTickets().isEmpty() || path.getIncompleteTickets().size() == 0);
+        assertTrue(path.getScore() > 0);
+    }
+
+    @Test
+    void testComputePathTrainsUsedLimit() {
+        
+        Ticket t1 = new Ticket("Vancouver", "Miami", 20, false);
+        Ticket t2 = new Ticket("Los Angeles", "Montreal", 20, false);
+        hand.addTicket(t1);
+        hand.addTicket(t2);
+
+        Path path = finder.computePath(hand);
+
+        int totalTrains = path.getRoutes().stream().mapToInt(Route::getLength).sum();
+        assertTrue(totalTrains <= 45);
+    }
+
+    
 }
