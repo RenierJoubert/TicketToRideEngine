@@ -1,7 +1,14 @@
 package ui;
 
+import ui.TicketToRideApp;
+
+// The Main class launches the TicketToRide CLI.
+
 public class Main {
-    public static void main(String[] args) throws Exception {
-        System.out.println("Welcome to my project!");
+
+    // EFFECTS: creates the TicketToRideApp
+    public static void main(String[] args) {
+        new TicketToRideApp();
     }
 }
+
