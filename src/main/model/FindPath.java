@@ -24,7 +24,7 @@ public class FindPath {
 
     // REQUIRES: start && end != null
     // EFFECTS: returns the shortest path between start and end cities and notes already selected routes as 0 cost.
-    private List<Route> dijkstra(String start,
+    public List<Route> dijkstra(String start,
                                  String end,
                                  Set<Route> selectedRoutes) {
 
