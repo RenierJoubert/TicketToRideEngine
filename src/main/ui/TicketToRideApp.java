@@ -7,9 +7,7 @@ import model.GameMap;
 import model.FindPath;
 import model.Path;
 
-import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 
 // The TicketToRideApp class represents a CLI UI for this program and allows the
 // user to add a ticket to their hand with specifications of their choosing, remove a

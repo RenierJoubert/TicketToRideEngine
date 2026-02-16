@@ -1,7 +1,5 @@
 package ui;
 
-import ui.TicketToRideApp;
-
 // The Main class launches the TicketToRide CLI.
 
 public class Main {
