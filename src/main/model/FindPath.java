@@ -174,27 +174,86 @@ public class FindPath {
     // REQUIRES: hand != null
     // EFFECTS: returns a set of routes that maximizes score using <= 45 trains
     public Set<Route> findRoutes(Hand hand) {
-        return Collections.emptySet();
+        
+        Set<Route> selectedRoutes = new HashSet<>();
+        Set<Ticket> remaining = new HashSet<>(hand.getTickets());
+        
+        int usedTrains = 0;
+        while (!remaining.isEmpty()) {
+
+            Ticket bestTicket = selectBestTicket(remaining, selectedRoutes);
+
+            if (bestTicket == null) {
+                break;
+            }
+
+            List<Route> bestPath = dijkstra(
+                    bestTicket.getStart(),
+                    bestTicket.getEnd(),
+                    selectedRoutes
+            );
+
+            int additionalCost = computeAdditionalCost(bestPath, selectedRoutes);
+
+            if (!canAfford(usedTrains, additionalCost)) {
+                remaining.remove(bestTicket);
+                continue;
+            }
+
+            usedTrains += addPathToSelection(bestPath, selectedRoutes);
+            remaining.remove(bestTicket);
+        }
+
+        return selectedRoutes;
     }
 
     // REQUIRES: remaining != null, selectedRoutes != null
     // EFFECTS: returns the ticket with highest marginal value density.
     //          Returns null if no ticket has non-negative density.
-    private Ticket selectBestTicket(Set<Ticket> remaining, Set<Route> selectedRoutes) {
-        return null;
+    private Ticket selectBestTicket(Set<Ticket> remaining,
+                                    Set<Route> selectedRoutes) {
+
+        Ticket bestTicket = null;
+        double bestDensity = -1;
+
+        for (Ticket t : remaining) {
+            double density = valueDensity(t, selectedRoutes);
+            if (density > bestDensity) {
+                bestDensity = density;
+                bestTicket = t;
+            }
+        }
+
+        if (bestTicket == null || bestDensity < 0) {
+            return null;
+        }
+
+        return bestTicket;
     }
 
     // REQUIRES: usedTrains >= 0, additionalCost >= 0
     // EFFECTS: returns true if +additionalCost <= TRAIN_LIMIT
-    private boolean canAfford(int usedTrains, int additionalCost) {
-        return false;
+    private boolean canAfford(int usedTrains,
+                              int additionalCost) {
+        return usedTrains + additionalCost <= TRAIN_LIMIT;
     }
 
     // REQUIRES: path != null, selectedRoutes != null
     // MODIFIES: selectedRoutes
     // EFFECTS: adds all routes in path that are not already selected.
     //          Returns total number of trains added.
-    private int addPathToSelection(List<Route> path, Set<Route> selectedRoutes) {
-        return 0;
+    private int addPathToSelection(List<Route> path,
+                                   Set<Route> selectedRoutes) {
+
+        int added = 0;
+
+        for (Route r : path) {
+            if (!selectedRoutes.contains(r)) {
+                selectedRoutes.add(r);
+                added += r.getLength();
+            }
+        }
+
+        return added;
     }
 }
