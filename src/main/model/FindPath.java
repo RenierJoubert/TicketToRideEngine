@@ -133,14 +133,40 @@ public class FindPath {
     // EFFECTS: computes marginal value density for completing ticket.
     // - Returns -1 if no path exists.
     // - Returns +infinity if ticket requires no additional trains.
-    private double valueDensity(Ticket ticket, Set<Route> selectedRoutes) {
-        return 0;
+    private double valueDensity(Ticket ticket,
+                                Set<Route> selectedRoutes) {
+
+        List<Route> path = dijkstra(ticket.getStart(),
+                ticket.getEnd(),
+                selectedRoutes);
+
+        if (path.isEmpty()) {
+            return -1;
+        }
+
+        int additionalCost = computeAdditionalCost(path, selectedRoutes);
+
+        if (additionalCost == 0) {
+            return Double.POSITIVE_INFINITY;
+        }
+
+        return (double) ticket.getPoints() / additionalCost;
     }
 
     // REQUIRES: path != null, selectedRoutes != null
     // EFFECTS: returns total train length of routes in path that are not already selected
-    private int computeAdditionalCost(List<Route> path, Set<Route> selectedRoutes) {
-        return 0;
+    private int computeAdditionalCost(List<Route> path,
+                                      Set<Route> selectedRoutes) {
+
+        int cost = 0;
+
+        for (Route r : path) {
+            if (!selectedRoutes.contains(r)) {
+                cost += r.getLength();
+            }
+        }
+
+        return cost;
     }
 
     // Selecting routes
