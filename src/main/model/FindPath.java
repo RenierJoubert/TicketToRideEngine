@@ -256,4 +256,24 @@ public class FindPath {
 
         return added;
     }
+
+    // EFFECTS: computes optimal routes for the given hand and returns a Path object
+    public Path computePath(Hand hand) {
+        Set<Route> routes = findRoutes(hand);
+        Set<Ticket> completed = new HashSet<>();
+        Set<Ticket> incomplete = new HashSet<>();
+
+        for (Ticket t : hand.getTickets()) {
+            List<Route> path = dijkstra(t.getStart(), t.getEnd(), routes);
+            if (!path.isEmpty()) {
+                completed.add(t);
+            } else {
+                incomplete.add(t);
+            }
+        }
+
+        int score = completed.stream().mapToInt(Ticket::getPoints).sum();
+        return new Path(routes, completed, incomplete, score);
+    }
+
 }
