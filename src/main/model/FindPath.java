@@ -27,7 +27,24 @@ public class FindPath {
     private List<Route> dijkstra(String start,
                                  String end,
                                  Set<Route> selectedRoutes) {
-        return Collections.emptyList();
+
+        Map<String, Integer> dist = new HashMap<>();
+        Map<String, Route> prevRoute = new HashMap<>();
+        Set<String> visited = new HashSet<>();
+
+        initializeDijkstra(start, dist);
+
+        PriorityQueue<String> pq =
+                new PriorityQueue<>(Comparator.comparingInt(dist::get));
+        pq.add(start);
+
+        runDijkstraLoop(end, selectedRoutes, dist, prevRoute, visited, pq);
+
+        if (!dist.containsKey(end)) {
+            return Collections.emptyList();
+        }
+
+        return reconstructPath(start, end, prevRoute);
     }
 
     // REQUIRES: start != null, dist != null
@@ -35,7 +52,7 @@ public class FindPath {
     // EFFECTS: initializes the distance map so that start has distance 0
     private void initializeDijkstra(String start,
                                     Map<String, Integer> dist) {
-        
+        dist.put(start, 0);
     }
 
     // REQUIRES: all parameters != null
@@ -47,7 +64,21 @@ public class FindPath {
                                  Map<String, Route> prevRoute,
                                  Set<String> visited,
                                  PriorityQueue<String> pq) {
-        
+
+        while (!pq.isEmpty()) {
+            String current = pq.poll();
+
+            if (visited.contains(current)) {
+                continue;
+            }
+            visited.add(current);
+
+            if (current.equals(end)) {
+                return;
+            }
+
+            relaxEdges(current, selectedRoutes, dist, prevRoute, pq);
+        }
     }
 
     // REQUIRES: all parameters != null, current is in dist
@@ -58,7 +89,19 @@ public class FindPath {
                             Map<String, Integer> dist,
                             Map<String, Route> prevRoute,
                             PriorityQueue<String> pq) {
-        
+
+        for (Route r : map.getRoutesFrom(current)) {
+            String neighbour = r.getEndCity();
+            int weight = selectedRoutes.contains(r) ? 0 : r.getLength();
+            int newDist = dist.get(current) + weight;
+
+            if (!dist.containsKey(neighbour)
+                    || newDist < dist.get(neighbour)) {
+                dist.put(neighbour, newDist);
+                prevRoute.put(neighbour, r);
+                pq.add(neighbour);
+            }
+        }
     }
 
     // REQUIRES: start != null, end != null, prevRoute != null
@@ -67,7 +110,21 @@ public class FindPath {
     private List<Route> reconstructPath(String start,
                                         String end,
                                         Map<String, Route> prevRoute) {
-        return Collections.emptyList();
+
+        List<Route> path = new ArrayList<>();
+        String current = end;
+
+        while (!current.equals(start)) {
+            Route r = prevRoute.get(current);
+            if (r == null) {
+                return Collections.emptyList();
+            }
+            path.add(r);
+            current = r.getStartCity();
+        }
+
+        Collections.reverse(path);
+        return path;
     }
 
     // Value density
