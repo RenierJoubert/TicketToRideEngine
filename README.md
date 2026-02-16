@@ -23,8 +23,8 @@ Finally, this project has been of interest to me ever since I was introduced to 
 
 <h4>User Stories</h4>
 
-* As a user I want to be able to add a ticket to my hand.
+* As a user I want to be able to add a ticket to my hand and specify the start city, end city, length, and number of points.
 * As a user I want to be able to view my hand.
-* As a user I want to be able to a route to my hand and specify the start city, end city, length, and number of points.
+* As a user I want to be able to remove tickets from my hand
 * As a user I want to be able to see the optimal path(s) to take in order to maximize the number of points obtained.
 
