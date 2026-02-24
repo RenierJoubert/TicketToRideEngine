@@ -272,7 +272,8 @@ public class FindPath {
             }
         }
 
-        int score = completed.stream().mapToInt(Ticket::getPoints).sum();
+        int score = completed.stream().mapToInt(Ticket::getPoints).sum()
+                    - incomplete.stream().mapToInt(Ticket::getPoints).sum();
         return new Path(routes, completed, incomplete, score);
     }
 
