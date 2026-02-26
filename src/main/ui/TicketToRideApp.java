@@ -9,11 +9,14 @@ import model.Path;
 
 import java.util.Scanner;
 
+import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
+
 // The TicketToRideApp class represents a CLI UI for this program and allows the
 // user to add a ticket to their hand with specifications of their choosing, remove a
 // ticket from their hand, view all the tickets currently in their hand, and see the optimal 
 // path(s) to take in order to maximize the number of points obtained.
 
+@ExcludeFromJacocoGeneratedReport
 public class TicketToRideApp {
 
     private final Scanner scanner;

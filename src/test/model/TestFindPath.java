@@ -4,8 +4,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
+
 import java.util.Set;
 
+@ExcludeFromJacocoGeneratedReport
 public class TestFindPath {
 
     private GameMap map;

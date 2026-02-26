@@ -3,8 +3,12 @@ package model;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
+
 import java.util.List;
 
+@ExcludeFromJacocoGeneratedReport
 public class TestGameMap {
 
     private GameMap map;
