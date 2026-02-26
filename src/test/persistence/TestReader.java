@@ -46,7 +46,7 @@ public class TestReader {
             Hand hand = reader.read();
             List<Ticket> tickets = hand.getTickets();
             assertEquals(1, hand.size());
-            Ticket ticket = tickets.get(1);
+            Ticket ticket = tickets.get(0);
             assertEquals("Vancouver", ticket.getStart());
             assertEquals("Seattle", ticket.getEnd());
             assertEquals(2, ticket.getPoints());
