@@ -30,5 +30,5 @@ Finally, this project has been of interest to me ever since I was introduced to 
 <h4>User Stories Phase 1<h4>
 
 * As a user I want to be able to able to save my hand, and optimal path if I so choose.
-*As a user I want to be able to reload my saved hand, and optimal path from file to resume where I left off.
+* As a user I want to be able to reload my saved hand, and optimal path from file to resume where I left off.
 
