@@ -19,13 +19,13 @@ public class Reader {
     }
 
     // EFFECTS: reads the saved Hand from file and returns it
-    public Hand read() {
+    public Hand read() throws IOException {
         return null;
     }
 
 
     // EFFECTS: returns the saved file as a string
-    private String fileToString(String saveFile) {
+    private String fileToString(String saveFile) throws IOException {
         return "";
     }
 
