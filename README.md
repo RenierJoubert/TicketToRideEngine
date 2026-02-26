@@ -27,7 +27,7 @@ Finally, this project has been of interest to me ever since I was introduced to 
 * As a user I want to be able to remove tickets from my hand.
 * As a user I want to be able to see the optimal path(s) to take in order to maximize the number of points obtained.
 
-<h4>User Stories Phase 1<h4>
+<h4>User Stories Phase 2</h4>
 
 * As a user I want to be able to able to save my hand, and optimal path if I so choose.
 * As a user I want to be able to reload my saved hand, and optimal path from file to resume where I left off.
