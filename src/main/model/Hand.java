@@ -7,6 +7,10 @@ package model;
 import java.util.List;
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.*;
+
 public class Hand {
 
     private List<Ticket> tickets;
@@ -52,6 +56,21 @@ public class Hand {
     // EFFECTS: returns the tickets in the players hand
     public List<Ticket> getTickets() {
         return tickets;
+    }
+
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("Hand", handToJson());
+        return json;
+    }
+
+    public JSONArray handToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Ticket t : tickets) {
+            jsonArray.put(t.toJson());
+        }
+        return jsonArray;
     }
 
 }

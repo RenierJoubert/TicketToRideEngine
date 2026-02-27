@@ -14,7 +14,7 @@ public class TestWriter {
     @Test
     void testWriteToInvalidFile() {
         try {
-            Writer writer = new Writer("./data/null.json");
+            Writer writer = new Writer("./data/\0null.json");
             writer.open();
             fail("IOException expected");
         } catch (IOException e) {
@@ -44,12 +44,12 @@ public class TestWriter {
         try {
             Hand hand = new Hand();
             hand.addTicket(new Ticket("Vancouver", "Seattle",  2, false));
-            Writer writer = new Writer("./data/testNaiveHand");
+            Writer writer = new Writer("./data/testNaiveHand.json");
             writer.open();
             writer.write(hand);
             writer.close();
 
-            Reader reader = new Reader("./data/testNaiveHand");
+            Reader reader = new Reader("./data/testNaiveHand.json");
             hand = reader.read();
             List<Ticket> tickets = hand.getTickets();
             assertEquals(1, hand.size());

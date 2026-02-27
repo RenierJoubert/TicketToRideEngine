@@ -5,6 +5,9 @@ package model;
 // associated with completion of the ticket, and a completion status (completed or not completed).
 // Additionally, there is no direction in the gameMap so the start city and end city are interchangeable.
 
+import org.json.JSONObject;
+import persistence.*;
+
 public class Ticket {
 
     private String start;
@@ -52,5 +55,14 @@ public class Ticket {
             return points;
         }
         return -points; 
+    }
+
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("start", start);
+        json.put("end", end);
+        json.put("points", points);
+        json.put("status", status);
+        return json;
     }
 }

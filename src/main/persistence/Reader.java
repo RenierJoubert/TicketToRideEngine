@@ -20,10 +20,14 @@ public class Reader {
 
     // EFFECTS: reads the saved Hand from file and returns it
     public Hand read() throws IOException {
+    try {
         String jsonData = fileToString(saveLocation);
         JSONObject jsonObject = new JSONObject(jsonData);
-        return parseHand(jsonObject);
+        return parseJsonObject(jsonObject);
+    } catch (JSONException e) {
+        throw new IOException("Invalid JSON format", e);
     }
+}
 
 
     // EFFECTS: returns the saved file as a string
@@ -36,15 +40,15 @@ public class Reader {
         return builder.toString();
     }
 
-    // EFFECTS: returns parsed Hand from JSON 
-    private Hand parseHand(JSONObject jsonObject) {
+    // EFFECTS: Parses JSONObject
+    private Hand parseJsonObject(JSONObject jsonObject) {
         Hand hand = new Hand();
         getTickets(hand, jsonObject);
         return hand;
     }
 
     // MODIFIES: Hand
-    // EFFECTS: Parses tickets from the JSON data and adds them to the user's hand
+    // EFFECTS: Parses ticket data from Hand in JSONObject and passes to addTicket
     private void getTickets(Hand hand, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("Hand");
         for (Object obj : jsonArray) {
@@ -53,6 +57,8 @@ public class Reader {
         }
     }
 
+    // MDOFIES: Hand
+    // EFFECTS: Generates ticket with parsed data and adds to user's hand
     private void addTicket(Hand hand, JSONObject jsonObject) {
         String start = jsonObject.getString("start");
         String end = jsonObject.getString("end");
