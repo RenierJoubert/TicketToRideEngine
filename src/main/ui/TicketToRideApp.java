@@ -18,6 +18,9 @@ import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
 // ticket from their hand, view all the tickets currently in their hand, and see the optimal 
 // path(s) to take in order to maximize the number of points obtained.
 
+// A portion of this code is modelled after code in:
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
 @ExcludeFromJacocoGeneratedReport
 public class TicketToRideApp {
 
@@ -173,6 +176,7 @@ public class TicketToRideApp {
         }
     }
 
+    // EFFECTS: Saves the current user hand to SAVE_FILE
     private void saveHand() {
         try {
             writer.open();
@@ -184,6 +188,8 @@ public class TicketToRideApp {
         }
     }
 
+    // MODIFIES: hand
+    // EFFECTS: loads the saved hand from file
     private void loadHand() {
         try {
             hand = reader.read();

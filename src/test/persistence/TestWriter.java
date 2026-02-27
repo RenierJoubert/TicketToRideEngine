@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
+// A portion of this code is modelled after code in:
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
 @ExcludeFromJacocoGeneratedReport
 
 public class TestWriter {

@@ -4,6 +4,9 @@ package model;
 // the players hand stores a colleciton of tickets and can evaluate the score of the player
 // based on the completion status of each ticket.
 
+// A portion of this code is modelled after code in:
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -57,12 +60,14 @@ public class Hand {
         return tickets;
     }
 
+    // EFFECTS: Returns the user's hand as a JSONObject
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("Hand", handToJson());
         return json;
     }
 
+    // EFFECTS: returns the tickets in the user's hand as a JSONArray
     public JSONArray handToJson() {
         JSONArray jsonArray = new JSONArray();
 

@@ -10,6 +10,9 @@ import org.json.*;
 
 // The Reader class reads the player's hand and saved path data from the stored JSON file
 
+// A portion of this code is modelled after code in:
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
 public class Reader {
     private String saveLocation;
 

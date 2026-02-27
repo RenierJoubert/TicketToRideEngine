@@ -6,6 +6,9 @@ import java.io.*;
 
 // The Writer class writes the current TicketToRide game state to a JSON file and saves it 
 
+// A portion of this code is modelled after code in:
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
 public class Writer {
 
     private String fileName;
