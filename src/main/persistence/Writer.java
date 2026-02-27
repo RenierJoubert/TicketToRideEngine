@@ -25,7 +25,7 @@ public class Writer {
 
     // MODIFIES: this
     // EFFECTS: Initializes writer at file location
-    public void open() throws FileNotFoundException{
+    public void open() throws FileNotFoundException {
         writer = new PrintWriter(new File(fileName));
     }
 
