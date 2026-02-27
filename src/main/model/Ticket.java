@@ -6,7 +6,6 @@ package model;
 // Additionally, there is no direction in the gameMap so the start city and end city are interchangeable.
 
 import org.json.JSONObject;
-import persistence.*;
 
 public class Ticket {
 
