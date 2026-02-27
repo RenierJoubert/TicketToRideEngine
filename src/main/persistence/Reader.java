@@ -20,14 +20,14 @@ public class Reader {
 
     // EFFECTS: reads the saved Hand from file and returns it
     public Hand read() throws IOException {
-    try {
-        String jsonData = fileToString(saveLocation);
-        JSONObject jsonObject = new JSONObject(jsonData);
-        return parseJsonObject(jsonObject);
-    } catch (JSONException e) {
-        throw new IOException("Invalid JSON format", e);
+        try {
+            String jsonData = fileToString(saveLocation);
+            JSONObject jsonObject = new JSONObject(jsonData);
+            return parseJsonObject(jsonObject);
+        } catch (IOException e) {
+            throw new IOException("Invalid JSON format", e);
+        }
     }
-}
 
 
     // EFFECTS: returns the saved file as a string
