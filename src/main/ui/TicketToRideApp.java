@@ -6,8 +6,10 @@ import model.Route;
 import model.GameMap;
 import model.FindPath;
 import model.Path;
-
 import java.util.Scanner;
+import persistence.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
 
@@ -20,9 +22,13 @@ import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
 public class TicketToRideApp {
 
     private final Scanner scanner;
-    private final Hand hand;
+    private Hand hand;
     private final GameMap map;
     private final FindPath pathFinder;
+
+    private Writer writer;
+    private Reader reader;
+    private static final String SAVE_FILE = "./data/hand.json";
 
     // EFFECTS: Constructs the CLI and starts the main loop
     public TicketToRideApp() {
@@ -30,6 +36,8 @@ public class TicketToRideApp {
         hand = new Hand();
         map = new GameMap();
         pathFinder = new FindPath(map);
+        writer = new Writer(SAVE_FILE);
+        reader = new Reader(SAVE_FILE);
         mainLoop();
     }
 
@@ -49,8 +57,11 @@ public class TicketToRideApp {
                     break;
                 case "4": findOptimalPath();
                     break;
-                case "0":
-                    running = false;
+                case "5": loadHand();
+                    break;
+                case "6": saveHand();
+                    break;
+                case "0": running = false;
                     System.out.println("Closing TicketToRideApp");
                     break;
                 default: System.out.println("Invalid key");
@@ -75,6 +86,8 @@ public class TicketToRideApp {
         System.out.println("2 - Remove a Ticket");
         System.out.println("3 - View Hand");
         System.out.println("4 - Find Optimal Path");
+        System.out.println("5 - Load Save File");
+        System.out.println("6 - Save Your Hand");
         System.out.println("0 - Exit");
         System.out.print("Choose an option: ");
     }
@@ -157,6 +170,26 @@ public class TicketToRideApp {
         System.out.println("Incomplete Tickets:");
         for (Ticket t : path.getIncompleteTickets()) {
             System.out.println("- " + t.getStart() + " to " + t.getEnd() + " (" + t.getPoints() + " points)");
+        }
+    }
+
+    private void saveHand() {
+        try {
+            writer.open();
+            writer.write(hand);
+            writer.close();
+            System.out.println("Hand Saved to " + SAVE_FILE);
+        } catch (FileNotFoundException e) {
+            System.out.println(SAVE_FILE + "Not Found");
+        }
+    }
+
+    private void loadHand() {
+        try {
+            hand = reader.read();
+            System.out.println("Hand loaded from file" + SAVE_FILE);
+        } catch (IOException e) {
+            System.out.println("Unable to read file: " + SAVE_FILE);
         }
     }
 
