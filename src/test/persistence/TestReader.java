@@ -14,7 +14,7 @@ public class TestReader {
     @Test
     void testReaderFileNull() {
         
-        Reader reader = new Reader("./data/null");
+        Reader reader = new Reader("./data/null.json");
         
         try {
             Hand hand = reader.read();
@@ -27,7 +27,7 @@ public class TestReader {
     @Test
     void testReaderEmptyHand() {
 
-        Reader reader = new Reader("./data/testReaderEmptyHand.json");
+        Reader reader = new Reader("./data/testEmptyHand.json");
 
         try {
             Hand hand = reader.read();
@@ -40,7 +40,7 @@ public class TestReader {
     @Test
     void testReadingNaiveHand() {
 
-        Reader reader = new Reader("./data/testReaderNaiveHand.json");
+        Reader reader = new Reader("./data/testNaiveHand.json");
 
         try {
             Hand hand = reader.read();

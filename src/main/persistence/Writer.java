@@ -24,7 +24,7 @@ public class Writer {
 
     // MODIFIES: this
     // EFFECTS: Initializes writer at file location
-    public void open() {
+    public void open() throws FileNotFoundException{
 
     }
 
@@ -37,7 +37,7 @@ public class Writer {
     // MODIFIES: this
     // EFFECTS: saves JSON to file
     public void save() {
-        
+
     }
 
 }
