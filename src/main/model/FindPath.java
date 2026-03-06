@@ -1,4 +1,5 @@
 package model;
+import java.util.*;
 
 // The FindPath class determines the optimal set of routes to build for a given hand
 // that maximizes player score, while working under the constraint that the player
@@ -6,8 +7,6 @@ package model;
 // algorithm to find the shortest path to complete a given ticket, and takes into account the reusability
 // factor of routes by computing the marginal value density of tickets and iterating over the player's hand
 // in decreasing order.
-
-import java.util.*;
 
 public class FindPath {
 
@@ -201,6 +200,7 @@ public class FindPath {
             }
 
             usedTrains += addPathToSelection(bestPath, selectedRoutes);
+            bestTicket.completeTicket();
             remaining.remove(bestTicket);
         }
 
@@ -262,16 +262,15 @@ public class FindPath {
         Set<Route> routes = findRoutes(hand);
         Set<Ticket> completed = new HashSet<>();
         Set<Ticket> incomplete = new HashSet<>();
-
+        
         for (Ticket t : hand.getTickets()) {
-            List<Route> path = dijkstra(t.getStart(), t.getEnd(), routes);
-            if (!path.isEmpty()) {
+            if (t.getStatus()) {
                 completed.add(t);
             } else {
                 incomplete.add(t);
             }
         }
-
+        
         int score = completed.stream().mapToInt(Ticket::getPoints).sum()
                     - incomplete.stream().mapToInt(Ticket::getPoints).sum();
         return new Path(routes, completed, incomplete, score);
