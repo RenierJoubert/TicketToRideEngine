@@ -22,7 +22,7 @@ Finally, this project has been of interest to me ever since I was introduced to 
 
 <h4>User Stories Phase 1</h4>
 
-* As a user I want to be able to add a ticket to my hand and specify the start city, end city, length, and number of points.
+* As a user I want to be able to add a ticket to my hand and specify the start city, end city, and number of points.
 * As a user I want to be able to view my hand.
 * As a user I want to be able to remove tickets from my hand.
 * As a user I want to be able to see the optimal path(s) to take in order to maximize the number of points obtained.
@@ -32,3 +32,11 @@ Finally, this project has been of interest to me ever since I was introduced to 
 * As a user I want to be able to able to save my current *Hand* if I so choose.
 * As a user I want to be able to reload my saved *Hand* from file to resume where I left off.
 
+<h4>Instructions for End User</h4>
+
+* You can add a ticket to your hand and specify the start city, end city, and number of points by using the panel labeled "add a ticket"
+* You can remove a ticket from your hand by using the panel labeled "remove a ticket" and inputting the corresponding number of the ticket you wish to be removed
+* You can view your current hand by using the panel labeled "view your hand"
+* You can see the optimal path for your hand and its corresponding complete vs incomplete ticket pie chart by using the "find the optimal path" panel
+* You can save your current hand by using the "save" panel
+* You can load a past hand from file by using the "load" panel

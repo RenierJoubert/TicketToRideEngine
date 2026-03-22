@@ -3,22 +3,32 @@ package ui;
 import javax.swing.*;
 import java.awt.*;
 
+import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
+
+// The TicketPieChart class represents a pie chart that displays the ratio of complete vs incomplete tickets
+
+@ExcludeFromJacocoGeneratedReport
 public class TicketPieChart extends JPanel {
+
     private int completed;
     private int incomplete;
 
+    // EFFECTS: Constructs the pie chart
     public TicketPieChart(int completed, int incomplete) {
         setPreferredSize(new Dimension(300, 300));
         this.completed = completed;
         this.incomplete = incomplete;
     }
 
+    // MODIFIES: this
+    // EFFECTS: Updates the pie chart data
     public void setData(int completed, int incomplete) {
         this.completed = completed;
         this.incomplete = incomplete;
         repaint(); 
     }
 
+    // EFFECTS: paints the pie chart
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

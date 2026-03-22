@@ -199,7 +199,6 @@ public class GUI extends JFrame {
     }
     
     // EFFECTS: creates a panel for the player to view their hand
-   
     private JPanel viewHand() {
         
         JPanel panel = new JPanel(new BorderLayout());
