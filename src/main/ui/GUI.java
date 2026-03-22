@@ -150,7 +150,7 @@ public class GUI extends JFrame {
         back.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
 
         panel.addComponentListener(new java.awt.event.ComponentAdapter() {
-            @Override
+            @ExcludeFromJacocoGeneratedReport
             public void componentShown(java.awt.event.ComponentEvent e) {
                 updateTextArea(text);
             }
@@ -158,6 +158,7 @@ public class GUI extends JFrame {
 
         return panel;
     }
+    
 
     // EFFECTS: ticket removing helper method for removeTicket
     private void handleRemove(JTextField input, JTextArea text) {
@@ -198,6 +199,7 @@ public class GUI extends JFrame {
     }
     
     // EFFECTS: creates a panel for the player to view their hand
+   
     private JPanel viewHand() {
         
         JPanel panel = new JPanel(new BorderLayout());
@@ -213,7 +215,7 @@ public class GUI extends JFrame {
         panel.add(back, BorderLayout.SOUTH);
 
         panel.addComponentListener(new java.awt.event.ComponentAdapter() {
-            @Override
+            @ExcludeFromJacocoGeneratedReport
             public void componentShown(java.awt.event.ComponentEvent e) {
                 updateTextArea(text);
             }
@@ -224,9 +226,68 @@ public class GUI extends JFrame {
 
     // EFFECTS: creates a panel for the player to see the optimal path for their hand
     private JPanel seePath() {
-        return new JPanel();
+        JPanel panel = new JPanel(new BorderLayout());
+        JTextArea text = new JTextArea();
+        text.setEditable(false);
+
+        JButton back = new JButton("back");
+        JPanel bottom = new JPanel();
+        bottom.add(back);
+        back.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
+
+        panel.addComponentListener(new java.awt.event.ComponentAdapter() {
+            @ExcludeFromJacocoGeneratedReport
+            public void componentShown(java.awt.event.ComponentEvent e) {
+                updatePathText(text);
+            }
+        });
+
+        panel.add(new JScrollPane(text), BorderLayout.CENTER);
+        panel.add(bottom, BorderLayout.SOUTH);
+        return panel;
     }
 
+    // EFFECTS: seePath helper method that gets the used routes and calls to check ticket status
+    private void updatePathText(JTextArea text) {
+        text.setText("");
+        if (hand.getTickets().isEmpty()) {
+            text.append("your hand is empty.\n");
+            return;
+        }
+
+        Path path = pathFinder.computePath(hand);
+
+        updateRoutesSummary(text, path);
+        updateTickets(text, path); 
+    }
+
+    // EFFECTS: seePath helper method that gets the routes chosen and trains used
+    private void updateRoutesSummary(JTextArea text, Path path) {
+        text.append("optimal routes:\n");
+        int totalTrains = 0;
+        for (Route r : path.getRoutes()) {
+            text.append("- " + r.getStartCity() + " -> " + r.getEndCity() 
+                    + " (" + r.getLength() + " trains)\n");
+            totalTrains += r.getLength();
+        }
+        text.append("\ntotal trains used: " + totalTrains + "\n");
+        text.append("total points earned: " + path.getScore() + "\n\n");
+    }
+
+    // EFFECTS: seePath helper method that gets complete and incomplete tickets
+    private void updateTickets(JTextArea text, Path path) {
+        text.append("completed Tickets:\n");
+        for (Ticket t : path.getCompletedTickets()) {
+            text.append("- " + t.getStart() + " -> " + t.getEnd() 
+                    + " (" + t.getPoints() + " points)\n");
+        }
+
+        text.append("\nincomplete Tickets:\n");
+        for (Ticket t : path.getIncompleteTickets()) {
+            text.append("- " + t.getStart() + " -> " + t.getEnd() 
+                    + " (" + t.getPoints() + " points)\n");
+        }
+    }
 
     // EFFECTS: creates a panel to save the current hand to file
     private JPanel saveHand() {
@@ -287,10 +348,6 @@ public class GUI extends JFrame {
         back.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
 
         return panel;
-    }
-    
-    
-
-    
+    }    
 
 }

@@ -9,6 +9,7 @@ public class Main {
     // EFFECTS: creates the TicketToRideApp GUI
     public static void main(String[] args) {
         new GUI();
+        new TicketToRideApp();
     }
 }
 
