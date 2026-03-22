@@ -6,9 +6,9 @@ import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
 @ExcludeFromJacocoGeneratedReport
 public class Main {
 
-    // EFFECTS: creates the TicketToRideApp
+    // EFFECTS: creates the TicketToRideApp GUI
     public static void main(String[] args) {
-        new TicketToRideApp();
+        new GUI();
     }
 }
 
