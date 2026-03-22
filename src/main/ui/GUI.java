@@ -46,6 +46,8 @@ public class GUI extends JFrame {
         mainPanel.add(removeTicket(), "remove");
         mainPanel.add(viewHand(), "view");
         mainPanel.add(seePath(), "path");
+        mainPanel.add(saveHand(), "save");
+        mainPanel.add(loadHand(), "load");
 
         add(mainPanel);
         setVisible(true);
@@ -67,8 +69,8 @@ public class GUI extends JFrame {
         remove.addActionListener(e -> cardLayout.show(mainPanel, "remove"));
         view.addActionListener(e -> cardLayout.show(mainPanel, "view"));
         path.addActionListener(e -> cardLayout.show(mainPanel, "path"));
-        save.addActionListener(e -> saveHand());
-        load.addActionListener(e -> loadHand());
+        save.addActionListener(e -> cardLayout.show(mainPanel, "save"));
+        load.addActionListener(e -> cardLayout.show(mainPanel, "load"));
 
         panel.add(add);
         panel.add(remove);
@@ -151,7 +153,7 @@ public class GUI extends JFrame {
                     hand.removeTicket(t);
 
                     JOptionPane.showMessageDialog(this, "ticket removed");
-                    updateTextArea(text); // refresh immediately
+                    updateTextArea(text); 
                 } else {
                     JOptionPane.showMessageDialog(this, "invalid number");
                 }
@@ -173,19 +175,22 @@ public class GUI extends JFrame {
         return panel; 
     }
 
+    // EFFECTS: updates text area with current tickets in hand
     private void updateTextArea(JTextArea text) {
+       
         text.setText("");
 
         int i = 1;
+
+        if (hand.getTickets().isEmpty()) {
+                    text.append("your hand is empty");
+                    }
+        
         for (Ticket t : hand.getTickets()) {
             text.append(i + ". " + t.getStart() + " -> "
                     + t.getEnd() + " (" + t.getPoints() + ")\n");
             i++;
         }
-
-        if (hand.getTickets().isEmpty()) {
-            text.append("your hand is empty");
-            }
     }
     
     // EFFECTS: creates a panel for the player to view their hand
@@ -221,13 +226,62 @@ public class GUI extends JFrame {
 
     // EFFECTS: creates a panel to save the current hand to file
     private JPanel saveHand() {
-        JPanel panel = new JPanel();
+        JPanel panel = new JPanel(new BorderLayout());
+        JLabel label = new JLabel("save your current hand?", SwingConstants.CENTER);
+        JButton save = new JButton("save");
+        JButton back = new JButton("back");
+        JPanel buttons = new JPanel();
+        buttons.add(save);
+        buttons.add(back);
+
+        panel.add(label, BorderLayout.CENTER);
+        panel.add(buttons, BorderLayout.SOUTH);
+
+        save.addActionListener(e -> {
+            try {
+                writer.open();
+                writer.write(hand);
+                writer.close();
+
+                JOptionPane.showMessageDialog(this, "hand saved successfully");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "failed to save");
+            }
+        });
+
+        back.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
+
         return panel;
     }
 
     // EFFECTS: creates a panel to load a saved hand from file
     private JPanel loadHand() {
-        JPanel panel = new JPanel();
+        
+        JPanel panel = new JPanel(new BorderLayout());
+        JPanel buttons = new JPanel();
+        
+        JLabel label = new JLabel("load saved hand?", SwingConstants.CENTER);
+
+        JButton load = new JButton("load");
+        JButton back = new JButton("back");
+        
+        buttons.add(load);
+        buttons.add(back);
+
+        panel.add(label, BorderLayout.CENTER);
+        panel.add(buttons, BorderLayout.SOUTH);
+
+        load.addActionListener(e -> {
+            try {
+                hand = reader.read();  
+                JOptionPane.showMessageDialog(this, "hand loaded successfully");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "failed to load");
+            }
+        });
+
+        back.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
+
         return panel;
     }
     
