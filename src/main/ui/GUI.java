@@ -26,6 +26,7 @@ public class GUI extends JFrame {
     private JPanel mainPanel;
     private JTextArea viewTextArea;
     private JTextArea pathTextArea;
+    private JTextArea removeTextArea;
 
 
 
@@ -70,7 +71,7 @@ public class GUI extends JFrame {
         JButton load = new JButton("load");
 
         add.addActionListener(e -> cardLayout.show(mainPanel, "add"));
-        remove.addActionListener(e -> cardLayout.show(mainPanel, "remove"));
+        remove.addActionListener(e -> showPanel("remove", removeTextArea, false));
         view.addActionListener(e -> showPanel("view", viewTextArea, false));
         path.addActionListener(e -> showPanel("path", pathTextArea, true));
         save.addActionListener(e -> cardLayout.show(mainPanel, "save"));
@@ -133,8 +134,8 @@ public class GUI extends JFrame {
         
         JPanel panel = new JPanel(new BorderLayout());
 
-        JTextArea text = new JTextArea();
-        text.setEditable(false);
+        removeTextArea = new JTextArea();
+        removeTextArea.setEditable(false);
 
         JTextField input = new JTextField();
 
@@ -147,10 +148,10 @@ public class GUI extends JFrame {
         bottom.add(remove);
         bottom.add(back);
 
-        panel.add(new JScrollPane(text), BorderLayout.CENTER);
+        panel.add(new JScrollPane(removeTextArea), BorderLayout.CENTER);
         panel.add(bottom, BorderLayout.SOUTH);
 
-        remove.addActionListener(e -> handleRemove(input, text));
+        remove.addActionListener(e -> handleRemove(input, removeTextArea));
         back.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
 
         return panel;
