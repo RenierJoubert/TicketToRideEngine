@@ -5,11 +5,13 @@ import persistence.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
+
+import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
 
 // The GUI class represents a graphical user interface for interacting with 
 // the ticket to ride app.
 
+@ExcludeFromJacocoGeneratedReport
 public class GUI extends JFrame {
     
     private static final String SAVE_FILE = "./data/hand.json";
@@ -32,11 +34,44 @@ public class GUI extends JFrame {
         writer = new Writer(SAVE_FILE);
         reader = new Reader(SAVE_FILE);
 
+        setTitle("Ticket To Ride");
+        setSize(100, 100);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        cardLayout = new CardLayout();
+        mainPanel = new JPanel(cardLayout);
+
+        mainPanel.add(mainMenu(), "menu");
+        mainPanel.add(addTicket(), "add");
+        mainPanel.add(viewHand(), "hand");
+        mainPanel.add(seePath(), "path");
+
+        add(mainPanel);
+        setVisible(true);
     }
 
     // EFFECTS: creates the main menu panel displaying all options
     private JPanel mainMenu() {
         JPanel panel = new JPanel();
+
+        JButton add = new JButton("add a ticket");
+        JButton view = new JButton("view your hand");
+        JButton path = new JButton("find the optimal path");
+        JButton save = new JButton("Save");
+        JButton load = new JButton("Load");
+
+        add.addActionListener(e -> cardLayout.show(mainPanel, "add"));
+        view.addActionListener(e -> cardLayout.show(mainPanel, "view"));
+        path.addActionListener(e -> cardLayout.show(mainPanel, "path"));
+        save.addActionListener(e -> saveHand());
+        load.addActionListener(e -> loadHand());
+
+        panel.add(add);
+        panel.add(view);
+        panel.add(path);
+        panel.add(save);
+        panel.add(load);
+
         return panel;
     }
 
