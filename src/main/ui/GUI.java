@@ -123,33 +123,92 @@ public class GUI extends JFrame {
     
     // EFFECTS: createst the panel for removing a ticket from the hand
     private JPanel removeTicket() {
-        JPanel panel = new JPanel();
-        return panel;
+        
+        JPanel panel = new JPanel(new BorderLayout());
+        JTextArea text = new JTextArea();
+        text.setEditable(false);
+
+        JTextField input = new JTextField();
+
+        JButton remove = new JButton("remove");
+        JButton back = new JButton("back");
+
+        JPanel bottom = new JPanel(new GridLayout(3, 1));
+        bottom.add(new JLabel("enter ticket number to remove:"));
+        bottom.add(input);
+        bottom.add(remove);
+        bottom.add(back);
+
+        panel.add(new JScrollPane(text), BorderLayout.CENTER);
+        panel.add(bottom, BorderLayout.SOUTH);
+
+        remove.addActionListener(e -> {
+            try {
+                int index = Integer.parseInt(input.getText()) - 1;
+
+                if (index >= 0 && index < hand.getTickets().size()) {
+                    Ticket t = hand.getTickets().get(index);
+                    hand.removeTicket(t);
+
+                    JOptionPane.showMessageDialog(this, "ticket removed");
+                    updateTextArea(text); // refresh immediately
+                } else {
+                    JOptionPane.showMessageDialog(this, "invalid number");
+                }
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "invalid input");
+            }
+        });
+
+        back.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
+
+        panel.addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentShown(java.awt.event.ComponentEvent e) {
+                updateTextArea(text);
+            }
+        });
+
+        return panel; 
+    }
+
+    private void updateTextArea(JTextArea text) {
+        text.setText("");
+
+        int i = 1;
+        for (Ticket t : hand.getTickets()) {
+            text.append(i + ". " + t.getStart() + " -> "
+                    + t.getEnd() + " (" + t.getPoints() + ")\n");
+            i++;
+        }
+
+        if (hand.getTickets().isEmpty()) {
+            text.append("your hand is empty");
+            }
     }
     
     // EFFECTS: creates a panel for the player to view their hand
     private JPanel viewHand() {
         
         JPanel panel = new JPanel(new BorderLayout());
-        JTextArea text = new JTextArea();
-        JButton refresh = new JButton("refresh");
-        JButton back = new JButton("back");
-        JPanel bottom = new JPanel();
-        
-        refresh.addActionListener(e -> {
-            text.setText("");
-            for (Ticket t : hand.getTickets()) {
-                text.append(t.getStart() + " -> " +
-                        t.getEnd() + " (" + t.getPoints() + ")\n");
-            }
-        });
 
+        JTextArea text = new JTextArea();
+        text.setEditable(false);
+
+        JButton back = new JButton("back");
 
         back.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
 
-        bottom.add(back);
-        bottom.add(refresh);
-        panel.add(bottom, BorderLayout.SOUTH);
+        panel.add(new JScrollPane(text), BorderLayout.CENTER);
+        panel.add(back, BorderLayout.SOUTH);
+
+        panel.addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentShown(java.awt.event.ComponentEvent e) {
+                updateTextArea(text);
+            }
+        });
 
         return panel;
     }
