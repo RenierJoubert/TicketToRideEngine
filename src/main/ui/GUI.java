@@ -28,6 +28,8 @@ public class GUI extends JFrame {
     private JTextArea pathTextArea;
     private JTextArea removeTextArea;
 
+    private TicketPieChart pieChart;
+
 
 
     // EFFECTS: Constructs + initializes the GUI
@@ -221,17 +223,21 @@ public class GUI extends JFrame {
         pathTextArea = new JTextArea();
         pathTextArea.setEditable(false);
 
+        pieChart = new TicketPieChart(0, 0);
+
         JButton back = new JButton("back");
         JPanel bottom = new JPanel();
         bottom.add(back);
         back.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
 
         panel.add(new JScrollPane(pathTextArea), BorderLayout.CENTER);
+        panel.add(pieChart, BorderLayout.EAST);
         panel.add(bottom, BorderLayout.SOUTH);
         return panel;
     }
 
     // EFFECTS: seePath helper method that gets the used routes and calls to check ticket status
+    //          + updates pie chart 
     private void updatePathText(JTextArea text) {
         text.setText("");
         if (hand.getTickets().isEmpty()) {
@@ -242,7 +248,11 @@ public class GUI extends JFrame {
         Path path = pathFinder.computePath(hand);
 
         updateRoutesSummary(text, path);
-        updateTickets(text, path); 
+        updateTickets(text, path);
+
+        int completed = path.getCompletedTickets().size();
+        int incomplete = path.getIncompleteTickets().size();
+        pieChart.setData(completed, incomplete);
     }
 
     // EFFECTS: seePath helper method that gets the routes chosen and trains used
