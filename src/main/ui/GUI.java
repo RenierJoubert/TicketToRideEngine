@@ -24,6 +24,10 @@ public class GUI extends JFrame {
 
     private CardLayout cardLayout;
     private JPanel mainPanel;
+    private JTextArea viewTextArea;
+    private JTextArea pathTextArea;
+
+
 
     // EFFECTS: Constructs + initializes the GUI
     public GUI() {
@@ -67,8 +71,8 @@ public class GUI extends JFrame {
 
         add.addActionListener(e -> cardLayout.show(mainPanel, "add"));
         remove.addActionListener(e -> cardLayout.show(mainPanel, "remove"));
-        view.addActionListener(e -> cardLayout.show(mainPanel, "view"));
-        path.addActionListener(e -> cardLayout.show(mainPanel, "path"));
+        view.addActionListener(e -> showPanel("view", viewTextArea, false));
+        path.addActionListener(e -> showPanel("path", pathTextArea, true));
         save.addActionListener(e -> cardLayout.show(mainPanel, "save"));
         load.addActionListener(e -> cardLayout.show(mainPanel, "load"));
 
@@ -149,13 +153,6 @@ public class GUI extends JFrame {
         remove.addActionListener(e -> handleRemove(input, text));
         back.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
 
-        panel.addComponentListener(new java.awt.event.ComponentAdapter() {
-            @ExcludeFromJacocoGeneratedReport
-            public void componentShown(java.awt.event.ComponentEvent e) {
-                updateTextArea(text);
-            }
-        });
-
         return panel;
     }
     
@@ -204,22 +201,15 @@ public class GUI extends JFrame {
         
         JPanel panel = new JPanel(new BorderLayout());
 
-        JTextArea text = new JTextArea();
-        text.setEditable(false);
+        viewTextArea = new JTextArea();
+        viewTextArea.setEditable(false);    
 
         JButton back = new JButton("back");
 
         back.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
 
-        panel.add(new JScrollPane(text), BorderLayout.CENTER);
+        panel.add(new JScrollPane(viewTextArea), BorderLayout.CENTER);
         panel.add(back, BorderLayout.SOUTH);
-
-        panel.addComponentListener(new java.awt.event.ComponentAdapter() {
-            @ExcludeFromJacocoGeneratedReport
-            public void componentShown(java.awt.event.ComponentEvent e) {
-                updateTextArea(text);
-            }
-        });
 
         return panel;
     }
@@ -227,22 +217,15 @@ public class GUI extends JFrame {
     // EFFECTS: creates a panel for the player to see the optimal path for their hand
     private JPanel seePath() {
         JPanel panel = new JPanel(new BorderLayout());
-        JTextArea text = new JTextArea();
-        text.setEditable(false);
+        pathTextArea = new JTextArea();
+        pathTextArea.setEditable(false);
 
         JButton back = new JButton("back");
         JPanel bottom = new JPanel();
         bottom.add(back);
         back.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
 
-        panel.addComponentListener(new java.awt.event.ComponentAdapter() {
-            @ExcludeFromJacocoGeneratedReport
-            public void componentShown(java.awt.event.ComponentEvent e) {
-                updatePathText(text);
-            }
-        });
-
-        panel.add(new JScrollPane(text), BorderLayout.CENTER);
+        panel.add(new JScrollPane(pathTextArea), BorderLayout.CENTER);
         panel.add(bottom, BorderLayout.SOUTH);
         return panel;
     }
@@ -348,6 +331,15 @@ public class GUI extends JFrame {
         back.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
 
         return panel;
-    }    
-
+    }   
+    
+    // EFFECTS: refreshes and updates panel info on panel changes
+    private void showPanel(String name, JTextArea text, boolean isPathPanel) {
+        cardLayout.show(mainPanel, name);
+        if (isPathPanel) {
+            updatePathText(text);
+        } else if (text != null) {
+            updateTextArea(text);
+        }
+    }
 }
