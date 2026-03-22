@@ -100,33 +100,35 @@ public class GUI extends JFrame {
         panel.add(end);
         panel.add(new JLabel("points:"));
         panel.add(points);
-
         panel.add(ok);
         panel.add(back);
 
-        ok.addActionListener(e -> {
-            try {
-                String startCity = start.getText();
-                String endCity = end.getText();
-                int numPoints = Integer.parseInt(points.getText());
-
-                hand.addTicket(new Ticket(startCity, endCity, numPoints, false));
-
-                JOptionPane.showMessageDialog(this, "ticket added to hand");
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "invalid input");
-            }
-        });
-
+        ok.addActionListener(e -> handleAdd(start, end, points));
         back.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
 
         return panel;
     }
+
+    // EFFECTS: ticket adding helper method for addTicket
+    private void handleAdd(JTextField start, JTextField end, JTextField points) {
+        try {
+            String s = start.getText();
+            String e = end.getText();
+            int p = Integer.parseInt(points.getText());
+
+            hand.addTicket(new Ticket(s, e, p, false));
+            JOptionPane.showMessageDialog(this, "ticket added to hand");
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "invalid input");
+        }
+    }
     
-    // EFFECTS: createst the panel for removing a ticket from the hand
+    // EFFECTS: creates the panel for removing a ticket from the hand
     private JPanel removeTicket() {
         
         JPanel panel = new JPanel(new BorderLayout());
+
         JTextArea text = new JTextArea();
         text.setEditable(false);
 
@@ -135,7 +137,7 @@ public class GUI extends JFrame {
         JButton remove = new JButton("remove");
         JButton back = new JButton("back");
 
-        JPanel bottom = new JPanel(new GridLayout(3, 1));
+        JPanel bottom = new JPanel(new GridLayout(4, 1));
         bottom.add(new JLabel("enter ticket number to remove:"));
         bottom.add(input);
         bottom.add(remove);
@@ -144,25 +146,7 @@ public class GUI extends JFrame {
         panel.add(new JScrollPane(text), BorderLayout.CENTER);
         panel.add(bottom, BorderLayout.SOUTH);
 
-        remove.addActionListener(e -> {
-            try {
-                int index = Integer.parseInt(input.getText()) - 1;
-
-                if (index >= 0 && index < hand.getTickets().size()) {
-                    Ticket t = hand.getTickets().get(index);
-                    hand.removeTicket(t);
-
-                    JOptionPane.showMessageDialog(this, "ticket removed");
-                    updateTextArea(text); 
-                } else {
-                    JOptionPane.showMessageDialog(this, "invalid number");
-                }
-
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "invalid input");
-            }
-        });
-
+        remove.addActionListener(e -> handleRemove(input, text));
         back.addActionListener(e -> cardLayout.show(mainPanel, "menu"));
 
         panel.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -172,7 +156,27 @@ public class GUI extends JFrame {
             }
         });
 
-        return panel; 
+        return panel;
+    }
+
+    // EFFECTS: ticket removing helper method for removeTicket
+    private void handleRemove(JTextField input, JTextArea text) {
+        try {
+            int index = Integer.parseInt(input.getText()) - 1;
+
+            if (index >= 0 && index < hand.getTickets().size()) {
+                Ticket t = hand.getTickets().get(index);
+                hand.removeTicket(t);
+
+                JOptionPane.showMessageDialog(this, "ticket removed");
+                updateTextArea(text);
+            } else {
+                JOptionPane.showMessageDialog(this, "invalid number");
+            }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "invalid input");
+        }
     }
 
     // EFFECTS: updates text area with current tickets in hand
@@ -183,8 +187,8 @@ public class GUI extends JFrame {
         int i = 1;
 
         if (hand.getTickets().isEmpty()) {
-                    text.append("your hand is empty");
-                    }
+            text.append("your hand is empty");
+        }
         
         for (Ticket t : hand.getTickets()) {
             text.append(i + ". " + t.getStart() + " -> "
@@ -220,9 +224,9 @@ public class GUI extends JFrame {
 
     // EFFECTS: creates a panel for the player to see the optimal path for their hand
     private JPanel seePath() {
-        JPanel panel = new JPanel();
-        return panel;
+        return new JPanel();
     }
+
 
     // EFFECTS: creates a panel to save the current hand to file
     private JPanel saveHand() {
