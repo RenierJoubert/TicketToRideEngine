@@ -3,6 +3,8 @@ package model;
 import java.util.Calendar;
 import java.util.Date;
 
+// A portion of this code is modelled after code in:
+// https://github.students.cs.ubc.ca/CPSC210/AlarmSystem 
 
 /**
  * Represents an alarm system event.
