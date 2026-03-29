@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
+import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit tests for the EventLog class
  */
+@ExcludeFromJacocoGeneratedReport
 public class TestEventLog {
 	private Event e1;
 	private Event e2;
