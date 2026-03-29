@@ -24,16 +24,23 @@ public class Hand {
 
     // REQUIRES: ticket != null
     // MODIFIES: this
-    // EFFECTS: adds ticket to hand
+    // EFFECTS: adds ticket to hand and logs it
     public void addTicket(Ticket ticket) {
         tickets.add(ticket);
+        EventLog.getInstance().logEvent(
+            new Event("added ticket: " + ticket.getStart() + " -> " + ticket.getEnd()
+                + " (" + ticket.getPoints() + " pts)")
+        );
     }
 
     // REQUIRES: ticket != null
     // MODIEFIES: this
-    // EFFECTS: removes ticket from hand
+    // EFFECTS: removes ticket from hand and logs it
     public void removeTicket(Ticket ticket) {
         tickets.remove(ticket);
+        EventLog.getInstance().logEvent(
+            new Event("removed ticket: " + ticket.getStart() + " -> " + ticket.getEnd())
+        );
     }
 
     // EFFECTS: returns number of tickets in hand

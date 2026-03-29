@@ -258,7 +258,7 @@ public class FindPath {
         return added;
     }
 
-    // EFFECTS: computes optimal routes for the given hand and returns a Path object
+    // EFFECTS: computes optimal routes for the given hand and returns a Path object and logs it
     public Path computePath(Hand hand) {
         Set<Route> routes = findRoutes(hand);
         Set<Ticket> completed = new HashSet<>();
@@ -274,6 +274,10 @@ public class FindPath {
         
         int score = completed.stream().mapToInt(Ticket::getPoints).sum()
                     - incomplete.stream().mapToInt(Ticket::getPoints).sum();
+        EventLog.getInstance().logEvent(
+            new Event("computed optimal path for hand with "
+                + hand.getTickets().size() + " tickets")
+        );
         return new Path(routes, completed, incomplete, score);
     }
 
