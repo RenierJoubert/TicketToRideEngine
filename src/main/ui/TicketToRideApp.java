@@ -92,7 +92,7 @@ public class TicketToRideApp {
         System.out.println("5 - Load Save File");
         System.out.println("6 - Save Your Hand");
         System.out.println("0 - Exit");
-        System.out.print("Choose an option: ");
+        System.out.print("Choose an option: \n");
     }
 
     // MODIFIES: hand
