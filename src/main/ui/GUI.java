@@ -1,6 +1,7 @@
 package ui;
 
 import model.*;
+import model.Event;
 import persistence.*;
 
 import javax.swing.*;
@@ -58,7 +59,24 @@ public class GUI extends JFrame {
 
         add(mainPanel);
         setVisible(true);
+
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                printLog();
+            }
+        });
     }
+
+
+    // Prints log of events to the terminal on application close
+    private void printLog() {
+        for (Event e : EventLog.getInstance()) {
+            System.out.println(e);
+            System.out.println();
+        }
+    }
+
+    
 
     // EFFECTS: creates the main menu panel displaying all options
     private JPanel mainMenu() {
