@@ -46,8 +46,7 @@ public class GUI extends JFrame {
         setSize(1000, 1000);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        cardLayout = new CardLayout();
-        mainPanel = new JPanel(cardLayout);
+        mainPanel = new JPanel(cardLayout = new CardLayout());
 
         mainPanel.add(mainMenu(), "menu");
         mainPanel.add(addTicket(), "add");
