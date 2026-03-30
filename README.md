@@ -42,12 +42,16 @@ Finally, this project has been of interest to me ever since I was introduced to 
 * You can load a past hand from file by using the "load" panel
 
 <h4>Phase 4: Task 2</h4>
+
 Sun Mar 29 16:23:49 PDT 2026
 added ticket: Vancouver -> Miami (20 pts)
+
 Sun Mar 29 16:23:57 PDT 2026
 added ticket: New York -> Las Vegas (21 pts)
+
 Sun Mar 29 16:24:09 PDT 2026
 removed ticket: Vancouver -> Miami
+
 Sun Mar 29 16:24:14 PDT 2026
 computed optimal path for hand with 1 tickets
 
