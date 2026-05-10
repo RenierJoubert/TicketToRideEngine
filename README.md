@@ -1,59 +1,37 @@
-<h1>My Personal Project: Ticket to Ride Optimized</h1>
+# Ticket to Ride Optimized
 
-<h4>What will this application do?</h4>
+A greedy pathfinding optimization engine for the board game *Ticket to Ride*, implemented in Java. This project applies graph theory and combinatorial optimization to compute maximum-value route selections under resource constraints.
 
-For my personal project I wish to program an application based on the board game *Ticket to Ride*, more specifically this application will take a list of *tickets* referred to as the user's *hand* and the *gameMap*, where a *ticket* is a list of *routes* from the *gameMap* and map that list to the optimized *path*, that is the *path* which yeilds the **maximum number of points** under the constraint such that the player only has access to 45 trains, which is the case in the actual game. Furthermore, this path need not be connected, namely, the list of routes in the path does not need to form 1 connected route and routes in the path can be separate. To elaborate, in the game a player recieves an arbitrary number of cards each game, where each card represents a *ticket* that in essence is a route from city A -> city B needing to be completed and a point value associated with that route, as well as a distance between the two cities measured in the number of trains between them, which is important because the player only has access to 45 trains. Then, if that ticket is completed the player earns x points, if not completed, x points are deducted from their total score. So, for this application I will be working at a higher level of abstraction than the actual board game as I will not be touching on several other intricacies of the game such as train colour, however the basic premise of optimization will still serve functional in actual play despite certain oversights.
+## Overview
 
-To clarify, my class **X** in this application will be a *ticket*, which will represent the following: (All of which can be arbitrary.)
-* A start city,
-* An end city,
-* The number of points associated with the route.
- 
+Ticket to Ride Engine solves the constrained optimization problem inherent in the board game *Ticket to Ride*: given a set of destination tickets and a 45-train budget, determine which tickets to complete in order to maximize total score.
 
-My class **Y** in this application will be a *hand* which represents the player's hand, that is the *tickets* that they wish to complete and will be a list of *tickets*.
+### Problem Statement
 
-<h4>Who is this application intended for?</h4>
+In *Ticket to Ride*, a player receives a hand of tickets, each representing:
+- A source and destination city
+- A point value (earned if completed, deducted if incomplete)
+- A distance in train units (the resource constraint)
 
-Furthermore, this application is intended for anyone interested in gaining a better understanding of optimization and strategy associated with *Ticket to Ride*, or those who simply want to improve their odds of winning.
+The engine computes the optimal subset of tickets to complete given the fixed train budget of 45 units, maximizing overall score while accommodating disconnected route networks.
 
-<h4>Why does this project interest me?</h4>
+### Algorithm
 
-Finally, this project has been of interest to me ever since I was introduced to the board game a few months ago, as despite the game's popularity very few sources delve into complexities of the graph theory under the game's hood so I thought it would make for a very interesting project.
+The pathfinding strategy employs a **greedy heuristic** combined with **Dijkstra's algorithm**:
 
-<h4>User Stories Phase 1</h4>
+1. **Value Density Sorting**: Tickets are prioritized by their points-per-distance ratio, ensuring high-ROI routes are considered first
+2. **Shortest Path Computation**: Dijkstra's algorithm determines the minimum train cost for each candidate ticket
+3. **Greedy Selection**: Tickets are iteratively selected if they fit within the remaining train budget
+4. **Path Aggregation**: Selected routes are aggregated into a unified path (not necessarily connected)
 
-* As a user I want to be able to add a ticket to my hand and specify the start city, end city, and number of points.
-* As a user I want to be able to view my hand.
-* As a user I want to be able to remove tickets from my hand.
-* As a user I want to be able to see the optimal path(s) to take in order to maximize the number of points obtained.
+**Time Complexity**: O(V² log V + E) per iteration, where V is the number of cities and E is the number of routes
 
-<h4>User Stories Phase 2</h4>
+**Space Complexity**: O(V + E) for graph representation
 
-* As a user I want to be able to able to save my current *Hand* if I so choose.
-* As a user I want to be able to reload my saved *Hand* from file to resume where I left off.
+## Features
 
-<h4>Instructions for End User</h4>
-
-* You can add a ticket to your hand and specify the start city, end city, and number of points by using the panel labeled "add a ticket"
-* You can remove a ticket from your hand by using the panel labeled "remove a ticket" and inputting the corresponding number of the ticket you wish to be removed
-* You can view your current hand by using the panel labeled "view your hand"
-* You can see the optimal path for your hand and its corresponding complete vs incomplete ticket pie chart by using the "find the optimal path" panel
-* You can save your current hand by using the "save" panel
-* You can load a past hand from file by using the "load" panel
-
-<h4>Phase 4: Task 2</h4>
-
-Sun Mar 29 16:23:49 PDT 2026
-added ticket: Vancouver -> Miami (20 pts)
-
-Sun Mar 29 16:23:57 PDT 2026
-added ticket: New York -> Las Vegas (21 pts)
-
-Sun Mar 29 16:24:09 PDT 2026
-removed ticket: Vancouver -> Miami
-
-Sun Mar 29 16:24:14 PDT 2026
-computed optimal path for hand with 1 tickets
-
-<h4>Phase 4: Task 3</h4>
-If I had more time to work on this project, I would definitely choose to refactor my FindPath class, as right now it runs both Dijkstra's algorithm and decides which tickets to prioritize based on value density. Therefore, violating the single responsibility principle, so to fix this I would probably separate the path finding algorithm into its own class and keep the decision making logic in the other. Thus, making the code overall more maintainable and allowing for variation in optimization strategies.
+- **Ticket Management**: Add, remove, and view tickets in your current hand
+- **Optimal Path Computation**: Calculate maximum-value route selection under resource constraints
+- **Persistence**: Save and load game states to/from disk
+- **Audit Trail**: Comprehensive logging of all operations with timestamps
+- **Performance Metrics**: Completion analysis with visual breakdown (pie chart) of completed vs. incomplete tickets
